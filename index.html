@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+</head>
+<body>
+    <h1>Tip Calculator</h1>
+    <p>Enter your bill and tip percentage (leave blank for default 15%).</p>
+    <form id="tip-form" novalidate>
+        <label>
+            Bill Amount:
+            <input type="number" id="billAmount" placeholder="Enter bill amount">
+        </label>
+        <br>
+        <br>
+        <label>
+            Tip Percentage:
+            <input type="number" id="tipPercentage" placeholder="Default: 15%">
+        </label>
+        <br><br>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="tip-result"></div>
+
+    <script>
+        const form = document.querySelector('form')
+        const resultContainer = document.getElementById('tip-result')
+        form.addEventListener('submit', (event)=>{
+            event.preventDefault();
+            const bill = parseFloat(document.getElementById('billAmount').value)
+            const tip = parseFloat(document.getElementById('tipPercentage').value) || 15;
+            
+            if(isNaN(bill) || bill <= 0) {
+                resultContainer.innerHTML = `<p style="color:red;">Please enter a valid bill amount.</p>`
+                return;
+            }
+
+            const tipAmount = (bill*tip)/100;
+            const totalBill = bill + tipAmount;
+            resultContainer.innerHTML = `
+            <p>Bill: ₱${bill.toFixed(2)}</p>
+            <p>Tip (${tip}%): ₱${tipAmount.toFixed(2)}</p>
+            <p><strong>Total: ₱${totalBill.toFixed(2)}</strong></p>
+            `
+        })
+    </script>
+</body>
+</html>
